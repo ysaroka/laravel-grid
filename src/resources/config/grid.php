@@ -146,6 +146,11 @@ return [
         'default_size' => 15,
 
         /**
+         * Paginator default path, withPath()
+         */
+        'path' => '/',
+
+        /**
          * Pagination function to use. Supply either 'default' or 'simple'
          */
         'type' => 'default',
