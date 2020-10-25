@@ -36,7 +36,7 @@ trait RendersButtons
      * use `addRowButton`, `addToolBarButton` or `addCustomButton`
      *
      * `create` - Displays a form/page/modal to create the entity
-     * `view` - Displays a form/page/modal containing entity data
+     * `edit` - Displays a form/page/modal containing entity data
      * `delete` - Deletes the entity
      * `refresh` - Refreshes the grid
      * `export` - Exports the data as pdf, excel, word, or csv
@@ -45,7 +45,7 @@ trait RendersButtons
      */
     protected $buttonsToGenerate = [
         'create',
-        'view',
+        'edit',
         'delete',
         'refresh',
         'export'
@@ -87,7 +87,7 @@ trait RendersButtons
             ],
             // row buttons
             static::$TYPE_ROW => [
-                'view' => $this->addViewButton(),
+                'edit' => $this->addEditButton(),
                 'delete' => $this->addDeleteButton()
             ]
         ];
@@ -165,28 +165,28 @@ trait RendersButtons
     }
 
     /**
-     * Add a view button to the grid
+     * Add a edit button to the grid
      *
      * @return GenericButton
      */
-    protected function addViewButton(): GenericButton
+    protected function addEditButton(): GenericButton
     {
         return (new GenericButton([
-            'name' => 'View',
-            'icon' => 'fa-eye',
+            'name' => 'Edit',
+            'icon' => 'fa-edit',
             'position' => 1,
             'class' => 'btn btn-outline-primary btn-sm grid-row-button',
             'showModal' => true,
             'gridId' => $this->getId(),
             'type' => static::$TYPE_ROW,
-            'title' => 'view record',
+            'title' => 'Edit record',
             'url' => function ($gridName, $item) {
-                return $this->getViewUrl([
+                return $this->getEditUrl([
                     $gridName => $item->{$this->getDefaultRouteParameter()}, 'ref' => $this->getId()
                 ]);
             },
             'renderIf' => function ($gridName, $item) {
-                return in_array('view', $this->buttonsToGenerate);
+                return in_array('edit', $this->buttonsToGenerate);
             }
         ]));
     }

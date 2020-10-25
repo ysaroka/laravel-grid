@@ -23,11 +23,11 @@ trait ConfiguresRoutes
     protected $createUrl;
 
     /**
-     * Route name for viewing an item
+     * Route name for editing an item
      *
      * @var string
      */
-    protected $viewUrl;
+    protected $editUrl;
 
     /**
      * Route name for updating an item
@@ -142,17 +142,17 @@ trait ConfiguresRoutes
     }
 
     /**
-     * @param string $viewUrl
+     * @param string $editUrl
      */
-    public function setViewUrl(string $viewUrl): void
+    public function setEditUrl(string $editUrl): void
     {
-        $this->viewUrl = $viewUrl;
+        $this->editUrl = $editUrl;
     }
 
-    public function getViewUrl(array $params = []): string
+    public function getEditUrl(array $params = []): string
     {
         $allParams = http_build_query(add_query_param($params));
-        return $this->viewUrl . (!empty($allParams) ? '?' . $allParams : '');
+        return $this->editUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**
