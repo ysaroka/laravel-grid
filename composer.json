@@ -1,35 +1,9 @@
 {
-  "name": "leantony/laravel-grid",
+  "name": "ysaroka/laravel-grid",
   "description": "A grid view for laravel, inspired by the yii2 grid widget",
   "license": "MIT",
   "type": "library",
-  "keywords": [
-    "leantony",
-    "bootstrap",
-    "laravel-grid",
-    "laravel",
-    "pjax",
-    "grid",
-    "laravel-5",
-    "laravel5",
-    "laravel6"
-  ],
-  "homepage": "https://github.com/leantony/laravel-grid",
-  "authors": [
-    {
-      "name": "Antony [leantony] Chacha",
-      "email": "chachaantony@gmail.com",
-      "role": "Developer"
-    }
-  ],
   "require": {
-    "illuminate/view": "^5.5|^6",
-    "illuminate/support": "^5.5|^6",
-    "illuminate/console": "^5.5|^6",
-    "illuminate/contracts": "^5.5|^6",
-    "illuminate/http": "^5.5|^6",
-    "illuminate/database": "^5.5|^6",
-    "illuminate/pagination": "^5.5|^6"
   },
   "suggest": {
     "maatwebsite/excel": "For exporting grid data as excel (~3.0)",
