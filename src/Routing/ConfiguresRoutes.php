@@ -13,35 +13,35 @@ trait ConfiguresRoutes
      *
      * @var string
      */
-    protected $indexRouteName;
+    protected $indexUrl;
 
     /**
      * Route name for the create route
      *
      * @var string
      */
-    protected $createRouteName;
+    protected $createUrl;
 
     /**
      * Route name for viewing an item
      *
      * @var string
      */
-    protected $viewRouteName;
+    protected $viewUrl;
 
     /**
      * Route name for updating an item
      *
      * @var string
      */
-    protected $updateRouteName;
+    protected $updateUrl;
 
     /**
      * Route name for deleting an item
      *
      * @var string
      */
-    protected $deleteRouteName;
+    protected $deleteUrl;
 
     /**
      * Sort url
@@ -58,11 +58,11 @@ trait ConfiguresRoutes
     protected $defaultRouteParameter = 'id';
 
     /**
-     * @return string
+     * @param string $indexUrl
      */
-    public function getIndexRouteName(): string
+    public function setIndexUrl(string $indexUrl): void
     {
-        return $this->indexRouteName;
+        $this->indexUrl = $indexUrl;
     }
 
     /**
@@ -71,7 +71,8 @@ trait ConfiguresRoutes
      */
     public function getIndexUrl(array $params = []): string
     {
-        return route($this->getIndexRouteName(), add_query_param($params));
+        $allParams = http_build_query(add_query_param($params));
+        return $this->indexUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**
@@ -79,7 +80,7 @@ trait ConfiguresRoutes
      */
     public function getRefreshUrl(): string
     {
-        return route($this->getIndexRouteName());
+        return $this->indexUrl;
     }
 
     /**
@@ -87,15 +88,19 @@ trait ConfiguresRoutes
      */
     public function getFilterUrl(): string
     {
-        return route($this->getIndexRouteName());
+        return $this->indexUrl;
     }
 
     /**
-     * @param string $indexRouteName
+     * @param string $key
+     * @param string $direction
      */
-    public function setIndexRouteName(string $indexRouteName): void
+    protected function setSortUrl(string $key, string $direction): void
     {
-        $this->indexRouteName = $indexRouteName;
+        $this->sortUrl = $this->getIndexUrl([
+            $this->getGridSortParam() => $key,
+            $this->getGridSortDirParam() => $direction
+        ]);
     }
 
     /**
@@ -110,23 +115,11 @@ trait ConfiguresRoutes
     }
 
     /**
-     * @param string $key
-     * @param string $direction
+     * @param string $createUrl
      */
-    protected function setSortUrl(string $key, string $direction): void
+    public function setCreateUrl(string $createUrl): void
     {
-        $this->sortUrl = route($this->getIndexRouteName(), add_query_param([
-            $this->getGridSortParam() => $key,
-            $this->getGridSortDirParam() => $direction
-        ]));
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreateRouteName(): string
-    {
-        return $this->createRouteName;
+        $this->createUrl = $createUrl;
     }
 
     /**
@@ -135,7 +128,8 @@ trait ConfiguresRoutes
      */
     public function getCreateUrl(array $params = []): string
     {
-        return route($this->getCreateRouteName(), add_query_param($params));
+        $allParams = http_build_query(add_query_param($params));
+        return $this->createUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**
@@ -144,52 +138,29 @@ trait ConfiguresRoutes
      */
     public function getSearchUrl(array $params = []): string
     {
-        return route($this->getIndexRouteName(), $params);
+        return $this->getIndexUrl($params);
     }
 
     /**
-     * @param string $createRouteName
+     * @param string $viewUrl
      */
-    public function setCreateRouteName(string $createRouteName): void
+    public function setViewUrl(string $viewUrl): void
     {
-        $this->createRouteName = $createRouteName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewRouteName(): string
-    {
-        return $this->viewRouteName;
-    }
-
-    /**
-     * @param string $viewRouteName
-     */
-    public function setViewRouteName(string $viewRouteName): void
-    {
-        $this->viewRouteName = $viewRouteName;
+        $this->viewUrl = $viewUrl;
     }
 
     public function getViewUrl(array $params = []): string
     {
-        return route($this->getViewRouteName(), add_query_param($params));
+        $allParams = http_build_query(add_query_param($params));
+        return $this->viewUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**
-     * @return string
+     * @param string $updateUrl
      */
-    public function getUpdateRouteName(): string
+    public function setUpdateUrl(string $updateUrl): void
     {
-        return $this->updateRouteName;
-    }
-
-    /**
-     * @param string $updateRouteName
-     */
-    public function setUpdateRouteName(string $updateRouteName): void
-    {
-        $this->updateRouteName = $updateRouteName;
+        $this->updateUrl = $updateUrl;
     }
 
     /**
@@ -198,15 +169,16 @@ trait ConfiguresRoutes
      */
     public function getUpdateUrl(array $params = []): string
     {
-        return route($this->getUpdateRouteName(), add_query_param($params));
+        $allParams = http_build_query(add_query_param($params));
+        return $this->updateUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**
-     * @return string
+     * @param string $deleteUrl
      */
-    public function getDeleteRouteName(): string
+    public function setDeleteUrl(string $deleteUrl): void
     {
-        return $this->deleteRouteName;
+        $this->deleteUrl = $deleteUrl;
     }
 
     /**
@@ -215,15 +187,8 @@ trait ConfiguresRoutes
      */
     public function getDeleteUrl(array $params = []): string
     {
-        return route($this->getDeleteRouteName(), add_query_param($params));
-    }
-
-    /**
-     * @param string $deleteRouteName
-     */
-    public function setDeleteRouteName(string $deleteRouteName): void
-    {
-        $this->deleteRouteName = $deleteRouteName;
+        $allParams = http_build_query(add_query_param($params));
+        return $this->deleteUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 
     /**

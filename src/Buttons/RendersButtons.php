@@ -156,7 +156,7 @@ trait RendersButtons
             },
             'gridId' => $this->getId(),
             'type' => static::$TYPE_TOOLBAR,
-            'exportRoute' => $this->getIndexRouteName(),
+            'exportUrl' => $this->getIndexUrl(),
             'renderIf' => function () {
                 // only render the export button if `$allowsExporting` is set to true
                 return in_array('export', $this->buttonsToGenerate);
@@ -213,7 +213,7 @@ trait RendersButtons
                 'pjax-target' => '#' . $this->getId()
             ],
             'url' => function ($gridName, $item) {
-                return route($this->getDeleteRouteName(), [
+                return $this->getDeleteUrl([
                     $gridName => $item->{$this->getDefaultRouteParameter()}, 'ref' => $this->getId()
                 ]);
             },

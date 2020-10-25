@@ -19,7 +19,7 @@ class ExportButton extends GenericButton
      *
      * @var string
      */
-    protected $exportRoute = null;
+    protected $exportUrl = null;
 
     /**
      * Allow extra parameters to be added on this object
@@ -78,11 +78,7 @@ class ExportButton extends GenericButton
      */
     protected function generateExportUrl($extension = 'xlsx'): string
     {
-        if (filter_var($this->exportRoute, FILTER_VALIDATE_URL)) {
-            $v = add_query_param(['export' => $extension]);
-            // append the query string
-            return request()->fullUrlWithQuery($v);
-        }
-        return route($this->exportRoute, add_query_param(['export' => $extension]));
+        $allParams = http_build_query(add_query_param(['export' => $extension]));
+        return $this->exportUrl . (!empty($allParams) ? '?' . $allParams : '');
     }
 }
